@@ -1,0 +1,22 @@
+{
+  "name": "classic-todo",
+  "version": "1.0.0",
+  "description": "Classic todo app",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leny404/classic-todo.git"
+  },
+  "author": "Leny",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leny404/classic-todo/issues"
+  },
+  "homepage": "https://github.com/leny404/classic-todo#readme",
+  "devDependencies": {
+    "parcel": "^2.16.4"
+  }
+}
