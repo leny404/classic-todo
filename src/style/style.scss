@@ -14,11 +14,11 @@ html {
 
 body {
   background-color: $bg-color;
-  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
-  max-width: 90rem;
-  margin: 0 auto;
-  height: 100vh;
+  margin: auto 0;
 }

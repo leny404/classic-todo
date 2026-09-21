@@ -20,7 +20,10 @@
           <h1 class="todo__header--title">Classic <span>TODO</span></h1>
         </header>
         <ul class="todo__list">
-          <li class="todo__list--item">
+          <!-- <li
+            class="todo__list--item"
+            data-id="36923ef5-b70f-455b-8b5a-5f4bc2a1dde1"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -28,7 +31,7 @@
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2.3"
+              stroke-width="2.5"
               stroke-linecap="round"
               stroke-linejoin="round"
               class="lucide lucide-check preview-icon"
@@ -37,7 +40,11 @@
             </svg>
             <p class="todo__description">asd</p>
           </li>
-          <li class="todo__list--item">
+
+          <li
+            class="todo__list--item"
+            data-id="58d044be-05d9-41d2-ba75-e025118fa466"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="28"
@@ -45,117 +52,16 @@
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2.3"
+              stroke-width="2.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-check preview-icon"
+              class="lucide lucide-check preview-icon checked"
+              id="checkmark-icon"
             >
               <path d="M20 6 9 17l-5-5" />
             </svg>
-            <p class="todo__description">asd</p>
-          </li>
-          <li class="todo__list--item">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-check preview-icon"
-            >
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-            <p class="todo__description">asd</p>
-          </li>
-          <li class="todo__list--item">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-check preview-icon"
-            >
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-            <p class="todo__description">asd</p>
-          </li>
-          <li class="todo__list--item">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-check preview-icon"
-            >
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-            <p class="todo__description">asd</p>
-          </li>
-          <li class="todo__list--item">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-check preview-icon"
-            >
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-            <p class="todo__description">asd</p>
-          </li>
-          <li class="todo__list--item">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-check preview-icon"
-            >
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-            <p class="todo__description">asd</p>
-          </li>
-          <li class="todo__list--item">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-check preview-icon"
-            >
-              <path d="M20 6 9 17l-5-5" />
-            </svg>
-            <p class="todo__description">asd</p>
-          </li>
+            <p class="todo__description">asdasdasd</p>
+          </li> -->
         </ul>
         <div class="todo__toolbar">
           <input
@@ -166,6 +72,24 @@
             placeholder="Enter new task..."
           />
           <button class="todo__button-add">Add to todo</button>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.1"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-trash preview-icon"
+          >
+            <path d="M10 11v6" />
+            <path d="M14 11v6" />
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+            <path d="M3 6h18" />
+            <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+          </svg>
         </div>
       </div>
     </main>

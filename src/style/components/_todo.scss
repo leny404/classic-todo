@@ -1,9 +1,10 @@
 @use '../abstracts/' as *;
 
 .todo__container {
-  margin-top: 10rem;
-  // background-color: red;
-  height: 40rem;
+  padding-inline: 1.8rem;
+  padding: 4.8rem;
+  max-width: 90rem;
+  margin: 0 auto;
 }
 
 .todo__header {
@@ -25,7 +26,9 @@
   font-size: 2.1rem;
   list-style-type: none;
   font-weight: 400;
+  overflow-y: scroll;
   margin-bottom: 3.6rem;
+  position: relative;
 
   .lucide-check {
     display: inline-flex;
@@ -35,9 +38,41 @@
     background-color: $bg-color;
     border: 1px solid #bda0f8;
     color: #bda0f8;
+    cursor: pointer;
+    transition:
+      background-color 0.23s,
+      border-color 0.23s,
+      color 0.23s;
+
+    &:hover {
+      background-color: #a87cf4;
+      border-color: #a87cf4;
+      color: #470eaa;
+    }
+  }
+
+  .lucide-check.checked {
+    background-color: #a87cf4 !important;
+    border-color: #a87cf4 !important;
+    color: #470eaa !important;
+  }
+
+  .lucide-check.checked + .todo__description {
+    color: #25262780;
+  }
+
+  .lucide-check.checked + .todo__description::after {
+    background-color: #25262780;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -4px;
+    width: calc(100% + 10px);
+    height: 2px;
   }
 
   &--item {
+    width: 100%;
     display: flex;
     gap: 1.2rem;
     border: 1px solid #bda0f8;
@@ -45,7 +80,6 @@
     border-radius: 9px;
     padding: 0.8rem 1.8rem;
     align-items: center;
-    cursor: pointer;
     transition:
       background-color 0.23s,
       border-color 0.23s;
@@ -61,12 +95,15 @@
 
   .todo__description {
     color: $black-color;
+    position: relative;
   }
 }
 
 .todo__toolbar {
   display: flex;
   gap: 1.2rem;
+  position: relative;
+  align-items: center;
 
   .todo__input-add {
     font-family: 'Poppins', sans-serif;
@@ -83,6 +120,7 @@
     &:focus {
       border-color: #a87cf4;
     }
+
     &::placeholder {
       color: #1d064c43;
     }
@@ -95,6 +133,7 @@
     font-weight: 700;
     text-transform: uppercase;
     padding: 0.8rem 1.8rem;
+    user-select: none;
 
     font-weight: 500;
     border-radius: 9px;
@@ -111,6 +150,16 @@
 
     &:active {
       background-color: #3a0b98;
+    }
+  }
+
+  .lucide-trash {
+    color: #25262780;
+    margin-left: auto;
+    transition: color 0.23s;
+    cursor: pointer;
+    &:hover {
+      color: #e16670;
     }
   }
 }
