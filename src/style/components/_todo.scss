@@ -126,40 +126,29 @@
     }
   }
 
-  .todo__button-add {
-    font-size: 1.6rem;
-    font-family: 'Poppins', sans-serif;
+  // .todo__button-add {
+  // }
 
-    font-weight: 700;
-    text-transform: uppercase;
-    padding: 0.8rem 1.8rem;
-    user-select: none;
-
-    font-weight: 500;
-    border-radius: 9px;
-    border: transparent;
-    background-color: $primary-color;
-    color: #f2ecfe;
-    box-sizing: content-box;
-    cursor: pointer;
-    transition: background-color 0.23s;
-
-    &:hover {
-      background-color: #490ebe;
-    }
-
-    &:active {
-      background-color: #3a0b98;
-    }
-  }
-
-  .lucide-trash {
-    color: #25262780;
-    margin-left: auto;
+  .toolbar-icon {
+    color: #74787c;
     transition: color 0.23s;
     cursor: pointer;
+  }
+  .lucide-trash {
     &:hover {
       color: #e16670;
+    }
+    &:active {
+      color: #d73340;
+    }
+  }
+  .lucide-funnel {
+    margin-left: auto;
+    &:hover {
+      color: #e09d00;
+    }
+    &:active {
+      color: #b88100;
     }
   }
 }

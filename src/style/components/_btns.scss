@@ -1,0 +1,41 @@
+@use '../abstracts/' as *;
+
+.btn {
+  font-size: 1.6rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 0.8rem 1.8rem;
+  user-select: none;
+  font-weight: 500;
+  border-radius: 9px;
+  border: transparent;
+  cursor: pointer;
+  transition: background-color 0.23s;
+}
+
+.primary--btn {
+  background-color: $primary-color;
+  color: #f2ecfe;
+
+  &:hover {
+    background-color: #490ebe;
+  }
+
+  &:active {
+    background-color: #3a0b98;
+  }
+}
+.secondary--btn {
+  background-color: #f2ecfd;
+  color: $black-color;
+  border: 1px solid #a87cf4;
+
+  &:hover {
+    background-color: #e6dafb;
+  }
+
+  &:active {
+    background-color: #cdb6f7;
+  }
+}
