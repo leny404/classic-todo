@@ -1,0 +1,116 @@
+@use '../abstracts/' as *;
+
+.todo__container {
+  margin-top: 10rem;
+  // background-color: red;
+  height: 40rem;
+}
+
+.todo__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.6rem;
+
+  &--title {
+    font-size: 4.2rem;
+    color: $black-color;
+    span {
+      color: $primary-color;
+    }
+  }
+}
+
+.todo__list {
+  font-size: 2.1rem;
+  list-style-type: none;
+  font-weight: 400;
+  margin-bottom: 3.6rem;
+
+  .lucide-check {
+    display: inline-flex;
+    border-radius: 100%;
+    padding: 0.35rem;
+    align-items: center;
+    background-color: $bg-color;
+    border: 1px solid #bda0f8;
+    color: #bda0f8;
+  }
+
+  &--item {
+    display: flex;
+    gap: 1.2rem;
+    border: 1px solid #bda0f8;
+    background-color: #e6dafb;
+    border-radius: 9px;
+    padding: 0.8rem 1.8rem;
+    align-items: center;
+    cursor: pointer;
+    transition:
+      background-color 0.23s,
+      border-color 0.23s;
+
+    &:hover {
+      background-color: #d9c6fa;
+      border-color: #a87cf4;
+    }
+    &:not(:last-of-type) {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .todo__description {
+    color: $black-color;
+  }
+}
+
+.todo__toolbar {
+  display: flex;
+  gap: 1.2rem;
+
+  .todo__input-add {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 500;
+    padding: 1rem 2rem;
+    background-color: #e6dafb;
+    border: 1px solid #bda0f8;
+    outline: none;
+    border-radius: 9px;
+    transition: border-color 0.23s;
+    color: $black-color;
+
+    &:focus {
+      border-color: #a87cf4;
+    }
+    &::placeholder {
+      color: #1d064c43;
+    }
+  }
+
+  .todo__button-add {
+    font-size: 1.6rem;
+    font-family: 'Poppins', sans-serif;
+
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0.8rem 1.8rem;
+
+    font-weight: 500;
+    border-radius: 9px;
+    border: transparent;
+    background-color: $primary-color;
+    color: #f2ecfe;
+    box-sizing: content-box;
+    cursor: pointer;
+    transition: background-color 0.23s;
+
+    &:hover {
+      background-color: #490ebe;
+    }
+
+    &:active {
+      background-color: #3a0b98;
+    }
+  }
+}

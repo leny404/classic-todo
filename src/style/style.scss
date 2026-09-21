@@ -1,0 +1,24 @@
+@use 'abstracts' as *;
+@use 'components' as *;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: $bg-color;
+  width: 100%;
+}
+
+main {
+  max-width: 90rem;
+  margin: 0 auto;
+  height: 100vh;
+}
