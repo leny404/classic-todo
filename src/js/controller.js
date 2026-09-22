@@ -7,7 +7,7 @@ const addTaskController = function () {
   if (!value) return;
 
   const todoObj = model.addTask(value);
-  addTaskView.render(todoObj);
+  taskItemView.render(todoObj);
 };
 
 const checkmarkTaskController = function (id) {
@@ -17,9 +17,14 @@ const checkmarkTaskController = function (id) {
   model.toggleIsFinishedState(id);
 };
 
+const filterController = function () {
+  taskItemView.renderAll(model.filterTasks());
+};
+
 const init = function () {
-  model.state.todo.forEach(todo => addTaskView.render(todo));
+  taskItemView.renderAll(model.state.todo);
   addTaskView.addTaskHandler(addTaskController);
   taskItemView.addCheckmarkTaskHandler(checkmarkTaskController);
+  taskItemView.addFilterHandler(filterController);
 };
 init();

@@ -36,11 +36,22 @@ export const addTask = function (desc) {
 
   return taskObj;
 };
-console.log(state.todo);
 
 export const toggleIsFinishedState = function (id) {
   const todo = findTodoById(id);
   todo.isFinished = !todo.isFinished;
   persistTodo();
-  console.log(state.todo);
+};
+
+export const filterTasks = function () {
+  const filtered = state.todo
+    .reduce(
+      (acc, curr) => {
+        acc[curr.isFinished ? 0 : 1].push(curr);
+        return acc;
+      },
+      [[], []],
+    )
+    .flat();
+  return filtered;
 };
