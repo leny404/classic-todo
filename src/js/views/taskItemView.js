@@ -26,8 +26,6 @@ class TaskItemView extends View {
     `;
   }
 
-  _generateMarkupAll() {}
-
   _findTaskElById(id) {
     return document.querySelector(`[data-id="${id}"]`) || null;
   }

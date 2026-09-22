@@ -1,5 +1,7 @@
 import addTaskView from './views/addTaskView';
 import taskItemView from './views/taskItemView';
+import filterBtnView from './views/filterBtnView';
+import deleteBtnView from './views/deleteBtnView';
 import * as model from './model';
 
 const addTaskController = function () {

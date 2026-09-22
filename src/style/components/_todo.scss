@@ -128,31 +128,4 @@
 
   // .todo__button-add {
   // }
-
-  .toolbar-icon {
-    color: #74787c;
-    transition: color 0.23s;
-    cursor: pointer;
-    border-radius: 7px;
-    padding: 0.6rem;
-  }
-  .lucide-trash {
-    &:hover {
-      background-color: #f5cccf;
-      color: #e16670;
-    }
-    &:active {
-      color: #d73340;
-    }
-  }
-  .lucide-funnel {
-    margin-left: auto;
-    &:hover {
-      background-color: #ffedc2;
-      color: #e09d00;
-    }
-    &:active {
-      color: #b88100;
-    }
-  }
 }
