@@ -18,8 +18,10 @@ const addTaskController = function () {
 const checkmarkTaskController = function (id) {
   // 1) UPDATE STATE IN MODEL
   model.toggleIsFinishedState(id);
-  // 12 CHECKMARK IN DOM
+  // 2 CHECKMARK IN DOM
   taskItemView.toggleCheckmarkTask(id);
+  // 3 RERENDER THAT BIH IF FILTER IS ACTIVE
+  if (isFilterActive) taskItemView.renderAll(model.filterTasks());
 };
 
 const filterController = function (isActive) {

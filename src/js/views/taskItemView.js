@@ -45,25 +45,18 @@ class TaskItemView extends View {
     `;
   }
 
-  _findTaskElById(id) {
-    return document.querySelector(`[data-id="${id}"]`) || null;
-  }
   toggleCheckmarkTask(id) {
-    const taskEl = this._findTaskElById(id);
+    const taskEl = document.querySelector(`[data-id="${id}"]`);
     const checkmarkEl = taskEl.querySelector('.lucide-check');
     checkmarkEl.classList.toggle('checked');
   }
 
-  _toggleTrashIcons() {
+  toggleDeleteMode(isActive) {
+    this._deleteMode = isActive;
     const btns = [...document.querySelectorAll('.todo__list--item')].map(item =>
       item.querySelector('.todo__delete-btn'),
     );
     btns.forEach(btn => btn.classList.toggle('todo__delete-btn--active'));
-  }
-
-  toggleDeleteMode(isActive) {
-    this._deleteMode = isActive;
-    this._toggleTrashIcons();
   }
 
   addCheckmarkTaskHandler(handler) {
@@ -75,6 +68,7 @@ class TaskItemView extends View {
       handler(todoItem.dataset.id);
     });
   }
+
   addDeleteTaskHandler(handler) {
     this._parentEl.addEventListener('click', e => {
       const btn = e.target.closest('.todo__delete-btn');

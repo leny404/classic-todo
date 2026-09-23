@@ -88,6 +88,10 @@
   pointer-events: none;
   visibility: hidden;
 
+  .todo__list--item:hover & {
+    color: #e16670;
+  }
+
   &--active {
     opacity: 1;
     pointer-events: all;
