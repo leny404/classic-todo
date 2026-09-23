@@ -44,6 +44,7 @@ export const toggleIsFinishedState = function (id) {
 };
 
 export const filterTasks = function () {
+  console.log('filtered');
   const filtered = state.todo
     .reduce(
       (acc, curr) => {

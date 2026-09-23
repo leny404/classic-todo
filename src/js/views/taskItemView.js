@@ -44,9 +44,5 @@ class TaskItemView extends View {
       handler(todoItem.dataset.id);
     });
   }
-
-  addFilterHandler(handler) {
-    this._filterBtn.addEventListener('click', handler);
-  }
 }
 export default new TaskItemView();

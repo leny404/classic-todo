@@ -42,7 +42,9 @@
 
 .toolbar-icon {
   color: #74787c;
-  transition: color 0.23s;
+  transition:
+    color 0.23s,
+    background-color 0.23s;
   cursor: pointer;
   border-radius: 7px;
   padding: 0.6rem;
@@ -54,7 +56,12 @@
     color: #e16670;
   }
   &:active {
+    background-color: #f4c7ca;
     color: #d73340;
+  }
+
+  &--disabled {
+    cursor: not-allowed;
   }
 }
 .filter-btn {
@@ -66,5 +73,9 @@
   }
   &:active {
     color: #b88100;
+    background-color: #fce9be;
+  }
+  &--disabled {
+    cursor: not-allowed;
   }
 }

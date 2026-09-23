@@ -1,7 +1,7 @@
 import addTaskView from './views/addTaskView';
 import taskItemView from './views/taskItemView';
-import filterBtnView from './views/filterBtnView';
-import deleteBtnView from './views/deleteBtnView';
+import { deleteBtnView, filterBtnView } from './views/btnView';
+
 import * as model from './model';
 
 const addTaskController = function () {
@@ -10,23 +10,40 @@ const addTaskController = function () {
 
   const todoObj = model.addTask(value);
   taskItemView.render(todoObj);
+  updateButtonsState();
 };
 
 const checkmarkTaskController = function (id) {
-  // 1) CHECKMARK IN DOM
-  taskItemView.toggleCheckmarkTask(id);
-  // 2) UPDATE STATE IN MODEL
+  // 1) UPDATE STATE IN MODEL
   model.toggleIsFinishedState(id);
+  // 12 CHECKMARK IN DOM
+  taskItemView.toggleCheckmarkTask(id);
 };
 
-const filterController = function () {
-  taskItemView.renderAll(model.filterTasks());
+const filterController = function (isActive) {
+  console.log(isActive);
+
+  taskItemView.renderAll(isActive ? model.filterTasks() : model.state.todo);
+};
+
+const controlDelete = function (isActive) {
+  console.log(isActive);
+};
+
+const updateButtonsState = function () {
+  const isEmpty = model.state.todo.length === 0;
+  filterBtnView.setDisabled(isEmpty);
+  deleteBtnView.setDisabled(isEmpty);
 };
 
 const init = function () {
+  updateButtonsState();
+  deleteBtnView.addClickHandler(controlDelete);
+  filterBtnView.addClickHandler(filterController);
+
   taskItemView.renderAll(model.state.todo);
+
   addTaskView.addTaskHandler(addTaskController);
   taskItemView.addCheckmarkTaskHandler(checkmarkTaskController);
-  taskItemView.addFilterHandler(filterController);
 };
 init();

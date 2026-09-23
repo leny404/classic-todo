@@ -10,7 +10,7 @@ class AddTaskView extends View {
   }
 
   addTaskHandler(handler) {
-    this._addBtn.addEventListener('click', e => {
+    this._addBtn.addEventListener('click', () => {
       handler();
       this._inputField.value = '';
     });
