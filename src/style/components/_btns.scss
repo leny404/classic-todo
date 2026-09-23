@@ -15,34 +15,34 @@
 }
 
 .primary--btn {
-  background-color: $primary-color;
-  color: #f2ecfe;
+  background-color: var(--primary-color);
+  color: var(--bg-color);
 
   &:hover {
-    background-color: #490ebe;
+    background-color: var(--primary-color-hover);
   }
 
   &:active {
-    background-color: #3a0b98;
+    background-color: var(--primary-color-active);
   }
 }
 .secondary--btn {
-  background-color: #f2ecfd;
-  color: $black-color;
-  border: 1px solid #a87cf4;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--primary-color-shade-1);
 
   &:hover {
-    background-color: #e6dafb;
+    background-color: var(--bg-color-hover);
   }
 
   &:active {
-    background-color: #cdb6f7;
+    background-color: var(--bg-color-active);
   }
 }
 
 .toolbar-icon,
 .todo__delete-btn {
-  color: #74787c;
+  color: var(--text-color-2);
   transition:
     color 0.23s,
     background-color 0.23s,
@@ -54,42 +54,52 @@
 .delete-btn {
   &:hover,
   &--active {
-    background-color: #f5cccf;
-    color: #e16670;
+    background-color: var(--delete-btn-color-shade-1);
+    color: var(--delete-btn-color-shade-2);
   }
   &:active {
-    background-color: #f2c3c6;
-    color: #d73340;
+    background-color: var(--delete-btn-color-shade-1-active);
+    color: var(--delete-btn-color-shade-2-active);
   }
 
   &--disabled {
     cursor: not-allowed;
+    &:hover,
+    &:active {
+      background-color: initial;
+      color: var(--text-color-2);
+    }
   }
 }
 .filter-btn {
   margin-left: auto;
   &:hover,
   &--active {
-    background-color: #ffedc2;
-    color: #e09d00;
+    background-color: var(--filter-btn-color-shade-1);
+    color: var(--filter-btn-color-shade-2);
   }
   &:active {
-    color: #b88100;
-    background-color: #fce9be;
+    background-color: var(--filter-btn-color-shade-1-active);
+    color: var(--filter-btn-color-shade-2-active);
   }
   &--disabled {
     cursor: not-allowed;
+    &:hover,
+    &:active {
+      background-color: initial;
+      color: var(--text-color-2);
+    }
   }
 }
 .todo__delete-btn {
   margin-left: auto;
-  color: #bda0f8;
+  color: var(--primary-color-shade-1);
   opacity: 0;
   pointer-events: none;
   visibility: hidden;
 
   .todo__list--item:hover & {
-    color: #e16670;
+    color: var(--delete-btn-color-shade-2);
   }
 
   &--active {
@@ -100,12 +110,12 @@
 
   &:hover,
   &--active:hover {
-    background-color: #f5cccf;
-    color: #e16670;
+    background-color: var(--delete-btn-color-shade-1);
+    color: var(--delete-btn-color-shade-2);
   }
   &:active {
-    background-color: #f2c3c6;
-    color: #d73340;
+    background-color: var(--delete-btn-color-shade-1-active);
+    color: var(--delete-btn-color-shade-2-active);
   }
 
   &--disabled {

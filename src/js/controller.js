@@ -37,12 +37,11 @@ const controlDeleteModeToggle = function (isActive) {
 const controlDeleteTask = function (id) {
   model.deleteTask(id);
 
-  if (model.state.todo.length !== 0) {
-    updateButtonsState();
-    taskItemView.renderAll(
-      isFilterActive ? model.filterTasks() : model.state.todo,
-    );
-  } else taskItemView.renderMessage();
+  updateButtonsState();
+  taskItemView.renderAll(
+    isFilterActive ? model.filterTasks() : model.state.todo,
+  );
+  if (model.state.todo.length === 0) taskItemView.renderMessage();
 };
 
 const updateButtonsState = function () {
