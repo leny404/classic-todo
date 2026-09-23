@@ -8,6 +8,7 @@ class BtnView {
     this._active = false;
     this._primaryIcon = this._btn.innerHTML;
     this._secondaryIcon = secondaryIcon;
+    this._handler = null;
   }
 
   _setIcon(icon) {
@@ -19,21 +20,30 @@ class BtnView {
     else this._setIcon(this._secondaryIcon);
   }
 
-  _toggleActive() {
+  toggleActive() {
     if (this._disabled) return;
     this._btn.classList.toggle(`${this._className}--active`);
     this._active = !this._active;
+    console.log(this._active);
   }
 
   setDisabled(isDisabled) {
     this._disabled = isDisabled;
     this._btn.classList.toggle(`${this._className}--disabled`, isDisabled);
+
+    if (isDisabled && this._active) {
+      this._active = false;
+      this._btn.classList.remove(`${this._className}--active`);
+      this._switchIcon();
+      this._handler?.(false); // informujemy kontroler o wymuszonym wyłączeniu
+    }
   }
 
   addClickHandler(handler) {
+    this._handler = handler;
     this._btn.addEventListener('click', () => {
       if (this._disabled) return;
-      this._toggleActive();
+      this.toggleActive();
       this._switchIcon();
       handler(this._active);
     });

@@ -44,7 +44,6 @@ export const toggleIsFinishedState = function (id) {
 };
 
 export const filterTasks = function () {
-  console.log('filtered');
   const filtered = state.todo
     .reduce(
       (acc, curr) => {
@@ -56,3 +55,12 @@ export const filterTasks = function () {
     .flat();
   return filtered;
 };
+
+export const deleteTask = function (id) {
+  const taskId = state.todo.findIndex(task => task.id === id);
+  if (taskId === -1) return;
+
+  state.todo.splice(taskId, 1);
+  persistTodo();
+};
+// DELETING AND ADDING TO LIST IS BAD

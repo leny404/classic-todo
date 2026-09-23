@@ -40,11 +40,13 @@
   }
 }
 
-.toolbar-icon {
+.toolbar-icon,
+.todo__delete-btn {
   color: #74787c;
   transition:
     color 0.23s,
-    background-color 0.23s;
+    background-color 0.23s,
+    opacity 0.23s;
   cursor: pointer;
   border-radius: 7px;
   padding: 0.6rem;
@@ -56,7 +58,7 @@
     color: #e16670;
   }
   &:active {
-    background-color: #f4c7ca;
+    background-color: #f2c3c6;
     color: #d73340;
   }
 
@@ -75,6 +77,33 @@
     color: #b88100;
     background-color: #fce9be;
   }
+  &--disabled {
+    cursor: not-allowed;
+  }
+}
+.todo__delete-btn {
+  margin-left: auto;
+  color: #bda0f8;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+
+  &--active {
+    opacity: 1;
+    pointer-events: all;
+    visibility: visible;
+  }
+
+  &:hover,
+  &--active:hover {
+    background-color: #f5cccf;
+    color: #e16670;
+  }
+  &:active {
+    background-color: #f2c3c6;
+    color: #d73340;
+  }
+
   &--disabled {
     cursor: not-allowed;
   }

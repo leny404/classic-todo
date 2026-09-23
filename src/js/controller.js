@@ -4,6 +4,8 @@ import { deleteBtnView, filterBtnView } from './views/btnView';
 
 import * as model from './model';
 
+let isFilterActive = false;
+
 const addTaskController = function () {
   const value = addTaskView.getInputValue();
   if (!value) return;
@@ -21,13 +23,20 @@ const checkmarkTaskController = function (id) {
 };
 
 const filterController = function (isActive) {
-  console.log(isActive);
-
+  isFilterActive = isActive;
   taskItemView.renderAll(isActive ? model.filterTasks() : model.state.todo);
 };
 
-const controlDelete = function (isActive) {
-  console.log(isActive);
+const controlDeleteModeToggle = function (isActive) {
+  taskItemView.toggleDeleteMode(isActive);
+};
+
+const controlDeleteTask = function (id) {
+  model.deleteTask(id);
+  updateButtonsState();
+  taskItemView.renderAll(
+    isFilterActive ? model.filterTasks() : model.state.todo,
+  );
 };
 
 const updateButtonsState = function () {
@@ -37,11 +46,13 @@ const updateButtonsState = function () {
 };
 
 const init = function () {
+  taskItemView.renderAll(model.state.todo);
+
   updateButtonsState();
-  deleteBtnView.addClickHandler(controlDelete);
+  deleteBtnView.addClickHandler(controlDeleteModeToggle);
   filterBtnView.addClickHandler(filterController);
 
-  taskItemView.renderAll(model.state.todo);
+  taskItemView.addDeleteTaskHandler(controlDeleteTask);
 
   addTaskView.addTaskHandler(addTaskController);
   taskItemView.addCheckmarkTaskHandler(checkmarkTaskController);
