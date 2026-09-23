@@ -11,6 +11,13 @@ export default class View {
     this._parentEl.insertAdjacentHTML('beforeend', markup);
   }
 
+  renderMessage(message = this._message) {
+    const markup = `<p class="${this._parentEl.className}--message">${message}</p>`;
+    this._clear();
+    this._parentEl.insertAdjacentHTML('beforeend', markup);
+    console.log('test');
+  }
+
   renderAll(dataArr) {
     this._clear();
     dataArr.forEach(data => this.render(data));

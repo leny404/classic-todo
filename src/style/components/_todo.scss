@@ -17,9 +17,18 @@
     font-size: 4.2rem;
     color: $black-color;
     span {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+
       color: $primary-color;
     }
   }
+}
+
+.todo__list--message {
+  text-align: center;
+  color: #777;
 }
 
 .todo__list {

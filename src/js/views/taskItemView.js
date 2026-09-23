@@ -1,8 +1,8 @@
 import View from './View';
-
 class TaskItemView extends View {
   _parentEl = document.querySelector('.todo__list');
   _filterBtn = document.querySelector('.lucide-funnel');
+  _message = 'Add your first task!';
   _deleteMode = false;
 
   _generateMarkup() {
