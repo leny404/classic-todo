@@ -25,3 +25,7 @@ body {
 main {
   margin: auto 0;
 }
+
+.no-transition * {
+  transition: none !important;
+}

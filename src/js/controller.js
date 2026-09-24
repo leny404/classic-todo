@@ -67,8 +67,8 @@ const init = function () {
   filterBtnView.addClickHandler(filterController);
   themeBtnView.addClickHandler(themeController);
 
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', savedTheme);
+  // const savedTheme = localStorage.getItem('theme') || 'light';
+  // document.documentElement.setAttribute('data-theme', savedTheme);
 
   themeBtnView.setActive(savedTheme === 'dark');
 
@@ -78,3 +78,9 @@ const init = function () {
   taskItemView.addCheckmarkTaskHandler(checkmarkTaskController);
 };
 init();
+
+window.addEventListener('load', () => {
+  requestAnimationFrame(() => {
+    document.documentElement.classList.remove('no-transition');
+  });
+});
