@@ -41,7 +41,8 @@
 }
 
 .toolbar-icon,
-.todo__delete-btn {
+.todo__delete-btn,
+.theme-btn {
   color: var(--text-color-2);
   transition:
     color 0.23s,
@@ -120,5 +121,30 @@
 
   &--disabled {
     cursor: not-allowed;
+  }
+}
+
+.theme-btn {
+  position: absolute;
+
+  top: 20px;
+  left: 20px;
+
+  &:hover {
+    background-color: var(--text-color-4);
+    color: var(--text-color-2);
+  }
+  &:active {
+    background-color: var(--text-color-3);
+    color: var(--text-color-3);
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    &:hover,
+    &:active {
+      background-color: initial;
+      color: var(--text-color-2);
+    }
   }
 }

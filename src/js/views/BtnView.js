@@ -1,4 +1,4 @@
-import { funnel, trash } from '../icons/icons';
+import { funnel, trash, theme } from '../icons/icons';
 
 class BtnView {
   constructor(className, secondaryIcon) {
@@ -27,6 +27,12 @@ class BtnView {
     console.log(this._active);
   }
 
+  setActive(isActive) {
+    this._active = isActive;
+    this._btn.classList.toggle(`${this._className}--active`, isActive);
+    this._switchIcon();
+  }
+
   setDisabled(isDisabled) {
     this._disabled = isDisabled;
     this._btn.classList.toggle(`${this._className}--disabled`, isDisabled);
@@ -51,3 +57,4 @@ class BtnView {
 }
 export const deleteBtnView = new BtnView('delete-btn', trash[1]);
 export const filterBtnView = new BtnView('filter-btn', funnel[1]);
+export const themeBtnView = new BtnView('theme-btn', theme[1]);
