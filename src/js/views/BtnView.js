@@ -16,21 +16,23 @@ class BtnView {
   }
 
   _switchIcon() {
-    if (!this._active) this._setIcon(this._primaryIcon);
-    else this._setIcon(this._secondaryIcon);
+    this._setIcon(this._active ? this._secondaryIcon : this._primaryIcon);
+  }
+
+  _setActiveState(isActive) {
+    this._active = isActive;
+    this._btn.classList.toggle(`${this._className}--active`, isActive);
+    this._switchIcon();
   }
 
   toggleActive() {
     if (this._disabled) return;
-    this._btn.classList.toggle(`${this._className}--active`);
-    this._active = !this._active;
-    console.log(this._active);
+    this._setActiveState(!this._active);
   }
 
   setActive(isActive) {
-    this._active = isActive;
-    this._btn.classList.toggle(`${this._className}--active`, isActive);
-    this._switchIcon();
+    if (this._disabled) return;
+    this._setActiveState(isActive);
   }
 
   setDisabled(isDisabled) {
@@ -38,10 +40,8 @@ class BtnView {
     this._btn.classList.toggle(`${this._className}--disabled`, isDisabled);
 
     if (isDisabled && this._active) {
-      this._active = false;
-      this._btn.classList.remove(`${this._className}--active`);
-      this._switchIcon();
-      this._handler?.(false); // informujemy kontroler o wymuszonym wyłączeniu
+      this._setActiveState(false);
+      this._handler?.(false);
     }
   }
 
@@ -50,7 +50,6 @@ class BtnView {
     this._btn.addEventListener('click', () => {
       if (this._disabled) return;
       this.toggleActive();
-      this._switchIcon();
       handler(this._active);
     });
   }
