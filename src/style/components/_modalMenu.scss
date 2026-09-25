@@ -1,0 +1,59 @@
+.modal-menu__overlay {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 100;
+  pointer-events: none;
+  visibility: hidden;
+  &--shown {
+    opacity: 1;
+    pointer-events: all;
+    visibility: visible;
+  }
+  // background-color: red;
+}
+
+.modal-menu {
+  // z-index: 100;
+  top: 0;
+  left: 0;
+  color: var(--text-color);
+  background-color: var(--primary-color-shade-1);
+  list-style-type: none;
+  border-radius: 8px;
+  padding: 1rem;
+  position: absolute;
+  top: 50%;
+
+  &__item {
+    font-size: 1.9rem;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid transparent;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 1.2rem;
+    text-decoration: none;
+    color: var(--text-color);
+    padding-right: 2rem;
+    width: 100%;
+    background-color: var(--primary-color-shade-4);
+    position: relative;
+
+    transition: background-color 0.23s;
+    &:hover {
+      background-color: var(--primary-color-shade-4-hover);
+    }
+    &:active {
+      background-color: var(--primary-color-shade-4-active);
+    }
+  }
+  li:not(:last-child) &__item {
+    margin-bottom: 1.2rem;
+  }
+}

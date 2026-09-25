@@ -2,6 +2,7 @@ import addTaskView from './views/addTaskView';
 import taskItemView from './views/taskItemView';
 import { deleteBtnView, filterBtnView, themeBtnView } from './views/btnView';
 import modalConfirmView from './views/modalConfirmView';
+import modalMenuView from './views/modalMenuView';
 
 import * as model from './model';
 
@@ -72,8 +73,13 @@ const controlDeleteTask = function (id) {
   removeTask(id);
 };
 
-const menuController = function () {
-  console.log('YEAH');
+const menuController = function (elPos, id) {
+  modalMenuView.open(id);
+  modalMenuView.teleportToPos(elPos);
+};
+
+const markAsImportantContorller = function (id) {
+  console.log(id);
 };
 
 const init = function () {
@@ -95,6 +101,8 @@ const init = function () {
   modalConfirmView.addCancelHandler();
 
   taskItemView.addMenuHandler(menuController);
+  modalMenuView.addCancelHandler();
+  modalMenuView.addMarkAsImportant(markAsImportantContorller);
 };
 init();
 

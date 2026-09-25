@@ -23,8 +23,7 @@ class modalConfirmView {
   addCancelHandler() {
     this._btnCancel.addEventListener('click', this.close.bind(this));
     this._overlay.addEventListener('click', e => {
-      if (e.target.closest('.modal-confirm')) return;
-      this.close();
+      if (!e.target.closest('.modal-confirm')) this.close();
     });
   }
 }

@@ -7,6 +7,7 @@ const createTaskObj = function (desc) {
     id: crypto.randomUUID(),
     description: desc,
     isFinished: false,
+    isImportant: false,
   };
 };
 
@@ -64,3 +65,4 @@ export const deleteTask = function (id) {
   persistTodo();
 };
 // DELETING AND ADDING TO LIST IS BAD
+console.log(state);

@@ -62,15 +62,19 @@ class TaskItemView extends View {
     `;
   }
 
+  _toggleAllBtns(btn) {
+    const btns = [...document.querySelectorAll(`.${btn}`)];
+    btns.forEach(b => b.classList.toggle(`${btn}--active`));
+  }
+
+  _getId(btn) {
+    return btn.closest('[data-id]').dataset.id;
+  }
+
   toggleCheckmarkTask(id) {
     const taskEl = document.querySelector(`[data-id="${id}"]`);
     const checkmarkEl = taskEl.querySelector('.lucide-check');
     checkmarkEl.classList.toggle('checked');
-  }
-
-  _toggleAllBtns(btn) {
-    const btns = [...document.querySelectorAll(`.${btn}`)];
-    btns.forEach(b => b.classList.toggle(`${btn}--active`));
   }
 
   toggleDeleteMode(isActive) {
@@ -97,8 +101,7 @@ class TaskItemView extends View {
       const btn = e.target.closest('.todo__delete-btn');
       if (!btn) return;
 
-      const id = btn.closest('[data-id]').dataset.id;
-      handler(id);
+      handler(this._getId(btn));
     });
   }
 
@@ -106,8 +109,15 @@ class TaskItemView extends View {
     this._parentEl.addEventListener('click', e => {
       const btn = e.target.closest('.todo__menu-btn');
       if (!btn) return;
+      const rect = btn.getBoundingClientRect();
+      const elPos = {
+        width: rect.width,
+        height: rect.height,
+        x: rect.x,
+        y: rect.y,
+      };
 
-      handler();
+      handler(elPos, this._getId(btn));
     });
   }
 }
