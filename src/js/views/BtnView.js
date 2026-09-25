@@ -1,13 +1,13 @@
 import { funnel, trash, theme } from '../icons/icons';
 
 class BtnView {
-  constructor(className, secondaryIcon) {
+  constructor(className, activeIcon) {
     this._className = className;
     this._btn = document.querySelector(`.${className}`);
     this._disabled = false;
     this._active = false;
     this._primaryIcon = this._btn.innerHTML;
-    this._secondaryIcon = secondaryIcon;
+    this._activeIcon = activeIcon;
     this._handler = null;
   }
 
@@ -16,7 +16,7 @@ class BtnView {
   }
 
   _switchIcon() {
-    this._setIcon(this._active ? this._secondaryIcon : this._primaryIcon);
+    this._setIcon(this._active ? this._activeIcon : this._primaryIcon);
   }
 
   _setActiveState(isActive) {

@@ -1,6 +1,7 @@
 import addTaskView from './views/addTaskView';
 import taskItemView from './views/taskItemView';
 import { deleteBtnView, filterBtnView, themeBtnView } from './views/btnView';
+import modalConfirmView from './views/modalConfirmView';
 
 import * as model from './model';
 
@@ -34,7 +35,15 @@ const controlDeleteModeToggle = function (isActive) {
   taskItemView.toggleDeleteMode(isActive);
 };
 
-const controlDeleteTask = function (id) {
+const themeController = function (isDark) {
+  document.documentElement.setAttribute(
+    'data-theme',
+    isDark ? 'dark' : 'light',
+  );
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+};
+
+const removeTask = function (id) {
   model.deleteTask(id);
 
   updateButtonsState();
@@ -44,12 +53,15 @@ const controlDeleteTask = function (id) {
   if (model.state.todo.length === 0) taskItemView.renderMessage();
 };
 
-const themeController = function (isDark) {
-  document.documentElement.setAttribute(
-    'data-theme',
-    isDark ? 'dark' : 'light',
-  );
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+const controlDeleteTask = function (id) {
+  const task = model.findTodoById(id);
+
+  if (task && !task.isFinished) {
+    modalConfirmView.open(id);
+    return;
+  }
+
+  removeTask(id);
 };
 
 const updateButtonsState = function () {
@@ -66,16 +78,14 @@ const init = function () {
   deleteBtnView.addClickHandler(controlDeleteModeToggle);
   filterBtnView.addClickHandler(filterController);
   themeBtnView.addClickHandler(themeController);
-
-  // const savedTheme = localStorage.getItem('theme') || 'light';
-  // document.documentElement.setAttribute('data-theme', savedTheme);
-
   themeBtnView.setActive(savedTheme === 'dark');
 
+  taskItemView.addCheckmarkTaskHandler(checkmarkTaskController);
+  addTaskView.addTaskHandler(addTaskController);
   taskItemView.addDeleteTaskHandler(controlDeleteTask);
 
-  addTaskView.addTaskHandler(addTaskController);
-  taskItemView.addCheckmarkTaskHandler(checkmarkTaskController);
+  modalConfirmView.addConfirmHandler(removeTask);
+  modalConfirmView.addCancelHandler();
 };
 init();
 

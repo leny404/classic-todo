@@ -25,7 +25,7 @@ const resetStorage = function () {
 };
 // resetStorage();
 
-const findTodoById = function (id) {
+export const findTodoById = function (id) {
   return state.todo.find(todo => todo.id === id);
 };
 
