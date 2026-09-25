@@ -98,6 +98,41 @@
     &:not(:last-of-type) {
       margin-bottom: 1rem;
     }
+
+    &.todo__list--important {
+      background-color: var(--important-shade-1);
+      border: 1px solid var(--important-shade-2);
+      outline: none;
+      &:hover {
+        background-color: var(--important-shade-hover);
+        border: 1px solid var(--important-shade-active);
+      }
+
+      & .lucide-check {
+        background-color: var(--important-shade-3);
+        border-color: var(--important-shade-2);
+        color: var(--important-shade-2);
+        &:hover {
+          background-color: var(--important-shade);
+          color: var(--text-color);
+        }
+        &:active {
+          background-color: var(--important-shade-2);
+        }
+      }
+    }
+    &.todo__list--important .lucide-check.checked {
+      background-color: var(--important-shade) !important;
+      border-color: var(--important-shade) !important;
+      color: var(--important-shade-3) !important;
+      &:hover {
+        background-color: var(--important-shade) !important;
+        color: var(--important-shade-2) !important;
+      }
+      &:active {
+        background-color: var(--important-shade-2) !important;
+      }
+    }
   }
 
   .todo__description {

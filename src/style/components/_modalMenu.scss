@@ -13,7 +13,6 @@
     pointer-events: all;
     visibility: visible;
   }
-  // background-color: red;
 }
 
 .modal-menu {
@@ -21,7 +20,9 @@
   top: 0;
   left: 0;
   color: var(--text-color);
-  background-color: var(--primary-color-shade-1);
+  background-color: var(--bg-color);
+  box-shadow: var(--bg-color) 0 5px 8px;
+
   list-style-type: none;
   border-radius: 8px;
   padding: 1rem;
@@ -39,21 +40,38 @@
     align-items: center;
     gap: 1.2rem;
     text-decoration: none;
-    color: var(--text-color);
     padding-right: 2rem;
     width: 100%;
-    background-color: var(--primary-color-shade-4);
+    background-color: var(--primary-color-shade-3);
+    color: var(--text-color);
     position: relative;
 
     transition: background-color 0.23s;
     &:hover {
-      background-color: var(--primary-color-shade-4-hover);
+      background-color: var(--primary-color-shade-3-hover);
     }
     &:active {
-      background-color: var(--primary-color-shade-4-active);
+      background-color: var(--primary-color-shade-3-active);
     }
   }
   li:not(:last-child) &__item {
     margin-bottom: 1.2rem;
   }
+}
+
+.modal-menu__highlight-btn--active {
+  .lucide-highlighter {
+    stroke-width: 2.5;
+  }
+  font-weight: 600;
+  background-color: var(--primary-color-shade-3-hover);
+}
+
+.modal-menu__title {
+  margin-bottom: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 1.6rem;
+  color: var(--text-color);
 }

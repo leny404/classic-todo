@@ -7,7 +7,7 @@ class TaskItemView extends View {
 
   _generateMarkup() {
     return `
-      <li class="todo__list--item" data-id="${this._data.id}">
+      <li class="todo__list--item ${this._data.isImportant ? 'todo__list--important' : ''}" data-id="${this._data.id}">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="26"

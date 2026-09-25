@@ -74,15 +74,20 @@ const controlDeleteTask = function (id) {
 };
 
 const menuController = function (elPos, id) {
+  const task = model.findTodoById(id);
+  if (!task) return;
+
   modalMenuView.open(id);
   modalMenuView.teleportToPos(elPos);
+
+  modalMenuView.setHighlightBtnActive(task.isImportant);
 };
 
-const markAsImportantContorller = function (id) {
-  // I GUESS WE WANT TO SET IMPORTANCE FROM CONTROLLER
-  // WHEN I WILL WANT TO SWITCH THE FUCKING BUTTON STATE
-  // FROM ACTIVE OR NOT ACTIVE YO FELL ME ?
-  model.setImportantTask(id, true);
+const markAsImportantContorller = function (id, isActive) {
+  model.setImportantTask(id, !isActive);
+  taskItemView.renderAll(
+    isFilterActive ? model.filterTasks() : model.state.todo,
+  );
 };
 
 const init = function () {

@@ -11,9 +11,18 @@ $black-color: #252627e6;
   --primary-color-active: #3a0b98;
   --primary-color-shade-1: #bda0f8;
 
+  // --- IMPORTANT: żywy pomarańcz, kontrastowy wobec fioletu ---
+  --important-shade: #ff7f11c7; // pełny akcent (checked bg, hover ikonki)
+  --important-shade-1: #ff7f112d; // tło elementu listy (bardzo delikatne)
+  --important-shade-2: #ff7f119f; // border / kolor ikonki (domyślny stan)
+  --important-shade-hover: #ff7f1149; // tło elementu listy przy hover
+  --important-shade-active: #ff7f117a; // border elementu przy hover / active ikonki
+  --important-shade-3: #3d1f00; // ciemny brąz — tło ikonki (unchecked) i tekst na checked
+
   --primary-color-shade-2: #470eaa;
   --primary-color-shade-3: #bda0f83d;
   --primary-color-shade-3-hover: #bda0f863;
+  --primary-color-shade-3-active: #bda0f880;
   --primary-color-shade-4: #ad8fe9;
   --primary-color-shade-4-hover: #a183dd;
   --primary-color-shade-4-active: #9273d1;
@@ -35,7 +44,6 @@ $black-color: #252627e6;
   --filter-btn-color-shade-2: #e09d00;
   --filter-btn-color-shade-2-active: #b88100;
 }
-
 [data-theme='dark'] {
   --bg-color: #1a1625;
   --bg-color-hover: #241f33;
@@ -45,9 +53,17 @@ $black-color: #252627e6;
   --primary-color-hover: #a47cf9;
   --primary-color-active: #b696fa;
   --primary-color-shade-1: #4a3570;
+
+  --important-shade: #e4ea28c7;
+  --important-shade-1: #e4ea282d;
+  --important-shade-2: #e4ea289f;
+  --important-shade-hover: #e4ea2849;
+  --important-shade-active: #e4ea287a;
+  --important-shade-3: #2a2a1e;
   --primary-color-shade-2: #c4a8fc;
   --primary-color-shade-3: #4a35704d;
-  --primary-color-shade-3-hover: #4a357073;
+  --primary-color-shade-3-active: #4a3570a1;
+  --primary-color-shade-3-hover: #4a3570c8;
   --primary-color-shade-4: #584280;
   --primary-color-shade-4-hover: #644e8d;
   --primary-color-shade-4-active: #755e9f;
