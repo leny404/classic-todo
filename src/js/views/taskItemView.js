@@ -30,6 +30,22 @@ class TaskItemView extends View {
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-ellipsis-vertical preview-icon todo__menu-btn ${this._deleteMode ? '' : 'todo__menu-btn--active'}"
+        >
+          <circle cx="12" cy="12" r="1" />
+          <circle cx="12" cy="5" r="1" />
+          <circle cx="12" cy="19" r="1" />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="38"
+          height="38"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
           stroke-width="2.1"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -41,6 +57,7 @@ class TaskItemView extends View {
           <path d="M3 6h18" />
           <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
         </svg>
+        <div class="btn-placeholder"></div>
       </li>
     `;
   }
@@ -51,12 +68,18 @@ class TaskItemView extends View {
     checkmarkEl.classList.toggle('checked');
   }
 
+  _toggleAllBtns(btn) {
+    const btns = [...document.querySelectorAll(`.${btn}`)];
+    btns.forEach(b => b.classList.toggle(`${btn}--active`));
+  }
+
   toggleDeleteMode(isActive) {
     this._deleteMode = isActive;
-    const btns = [...document.querySelectorAll('.todo__list--item')].map(item =>
-      item.querySelector('.todo__delete-btn'),
-    );
-    btns.forEach(btn => btn.classList.toggle('todo__delete-btn--active'));
+    this._toggleAllBtns('todo__delete-btn');
+  }
+
+  toggleMenuBtns() {
+    this._toggleAllBtns('todo__menu-btn');
   }
 
   addCheckmarkTaskHandler(handler) {
@@ -75,8 +98,16 @@ class TaskItemView extends View {
       if (!btn) return;
 
       const id = btn.closest('[data-id]').dataset.id;
-
       handler(id);
+    });
+  }
+
+  addMenuHandler(handler) {
+    this._parentEl.addEventListener('click', e => {
+      const btn = e.target.closest('.todo__menu-btn');
+      if (!btn) return;
+
+      handler();
     });
   }
 }

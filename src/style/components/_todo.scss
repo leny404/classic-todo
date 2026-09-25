@@ -30,6 +30,7 @@
 .todo__list--message {
   text-align: center;
   color: var(--text-color-2);
+  font-size: 2rem;
 }
 
 .todo__list {
@@ -84,7 +85,7 @@
     border: 1px solid var(--primary-color-shade-1);
     background-color: var(--primary-color-shade-3);
     border-radius: 9px;
-    padding: 0.9rem 1.8rem;
+    padding: 1.4rem 1.8rem;
     align-items: center;
     transition:
       background-color 0.23s,

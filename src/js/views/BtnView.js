@@ -2,13 +2,14 @@ import { funnel, trash, theme } from '../icons/icons';
 
 class BtnView {
   constructor(className, activeIcon) {
+    this._handler = null;
     this._className = className;
     this._btn = document.querySelector(`.${className}`);
     this._disabled = false;
     this._active = false;
     this._primaryIcon = this._btn.innerHTML;
     this._activeIcon = activeIcon;
-    this._handler = null;
+    if (!activeIcon) this._activeIcon = this._primaryIcon;
   }
 
   _setIcon(icon) {
@@ -47,6 +48,7 @@ class BtnView {
 
   addClickHandler(handler) {
     this._handler = handler;
+
     this._btn.addEventListener('click', () => {
       if (this._disabled) return;
       this.toggleActive();

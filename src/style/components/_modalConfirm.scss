@@ -1,6 +1,5 @@
 .modal-confirm {
   background-color: var(--bg-color);
-  border: 1px solid var(--primary-color-shade-1);
   border-radius: 9px;
   padding: 1.6rem 2rem;
   position: absolute;
@@ -15,7 +14,7 @@
 
     top: 0;
     left: 0;
-    background-color: #00000025;
+    background-color: #00000034;
     backdrop-filter: blur(2px);
     height: 100vh;
     width: 100%;
@@ -35,12 +34,12 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.8rem;
     gap: 2rem;
   }
 
   &__message {
-    font-size: 2.1rem;
+    font-size: 2rem;
     color: var(--text-color);
     // text-align: center;
   }
@@ -59,6 +58,6 @@
 }
 
 .modal-icon {
-  color: var(--text-color);
+  color: var(--filter-btn-color-shade-2);
   flex-shrink: 0;
 }

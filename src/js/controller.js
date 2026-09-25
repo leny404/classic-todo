@@ -7,6 +7,12 @@ import * as model from './model';
 
 let isFilterActive = false;
 
+const updateButtonsState = function () {
+  const isEmpty = model.state.todo.length === 0;
+  filterBtnView.setDisabled(isEmpty);
+  deleteBtnView.setDisabled(isEmpty);
+};
+
 const addTaskController = function () {
   const value = addTaskView.getInputValue();
   if (!value) return;
@@ -32,7 +38,9 @@ const filterController = function (isActive) {
 };
 
 const controlDeleteModeToggle = function (isActive) {
+  // WHEN TRASH ICONS ARE VISIBLE, MENU ICONS ARE NOT VISIBLE
   taskItemView.toggleDeleteMode(isActive);
+  taskItemView.toggleMenuBtns();
 };
 
 const themeController = function (isDark) {
@@ -64,10 +72,8 @@ const controlDeleteTask = function (id) {
   removeTask(id);
 };
 
-const updateButtonsState = function () {
-  const isEmpty = model.state.todo.length === 0;
-  filterBtnView.setDisabled(isEmpty);
-  deleteBtnView.setDisabled(isEmpty);
+const menuController = function () {
+  console.log('YEAH');
 };
 
 const init = function () {
@@ -78,6 +84,7 @@ const init = function () {
   deleteBtnView.addClickHandler(controlDeleteModeToggle);
   filterBtnView.addClickHandler(filterController);
   themeBtnView.addClickHandler(themeController);
+
   themeBtnView.setActive(savedTheme === 'dark');
 
   taskItemView.addCheckmarkTaskHandler(checkmarkTaskController);
@@ -86,6 +93,8 @@ const init = function () {
 
   modalConfirmView.addConfirmHandler(removeTask);
   modalConfirmView.addCancelHandler();
+
+  taskItemView.addMenuHandler(menuController);
 };
 init();
 
