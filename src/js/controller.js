@@ -79,7 +79,10 @@ const menuController = function (elPos, id) {
 };
 
 const markAsImportantContorller = function (id) {
-  console.log(id);
+  // I GUESS WE WANT TO SET IMPORTANCE FROM CONTROLLER
+  // WHEN I WILL WANT TO SWITCH THE FUCKING BUTTON STATE
+  // FROM ACTIVE OR NOT ACTIVE YO FELL ME ?
+  model.setImportantTask(id, true);
 };
 
 const init = function () {

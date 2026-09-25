@@ -30,6 +30,7 @@ class modalMenuView {
   addMarkAsImportant(handler) {
     this._highlightBtn.addEventListener('click', () => {
       handler(this._pendingId);
+      this.close();
     });
   }
 }

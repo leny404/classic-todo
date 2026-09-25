@@ -64,5 +64,10 @@ export const deleteTask = function (id) {
   state.todo.splice(taskId, 1);
   persistTodo();
 };
-// DELETING AND ADDING TO LIST IS BAD
-console.log(state);
+
+export const setImportantTask = function (id, importantBool) {
+  const taskId = state.todo.findIndex(task => task.id === id);
+  state.todo[taskId].isImportant = importantBool;
+  
+  persistTodo();
+};
