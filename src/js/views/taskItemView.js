@@ -4,6 +4,8 @@ class TaskItemView extends View {
   _filterBtn = document.querySelector('.lucide-funnel');
   _message = 'Add your first task!';
   _deleteMode = false;
+  _editMode = false;
+  _taskEl = null;
 
   _generateMarkup() {
     return `
@@ -22,7 +24,10 @@ class TaskItemView extends View {
         >
           <path d="M20 6 9 17l-5-5" />
         </svg>
-        <p class="todo__description">${this._data.description}</p>
+        <p class="todo__description todo__description--shown">${this._data.description}</p>
+        <form class="form-edit">
+        <input type="text"  name="description-edit" id="description-edit" class="description-edit description-edit--shown" />
+        </form>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="38"
@@ -71,6 +76,27 @@ class TaskItemView extends View {
     return btn.closest('[data-id]').dataset.id;
   }
 
+  showEditAction() {
+    const descEl = this._taskEl.querySelector('.todo__description');
+    const inputEl = this._taskEl.querySelector('.description-edit');
+    const formEl = this._taskEl.querySelector('.form-edit');
+
+    descEl.classList.remove('todo__description--shown');
+    formEl.classList.add('form-edit--shown');
+    inputEl.value = descEl.textContent;
+    inputEl.focus();
+  }
+  hideEditAction() {
+    const descEl = this._taskEl.querySelector('.todo__description');
+    const formEl = this._taskEl.querySelector('.form-edit');
+    descEl.classList.add('todo__description--shown');
+    formEl.classList.remove('form-edit--shown');
+  }
+
+  getInputValue() {
+    return this._taskEl.querySelector('.description-edit').value;
+  }
+
   toggleCheckmarkTask(id) {
     const taskEl = document.querySelector(`[data-id="${id}"]`);
     const checkmarkEl = taskEl.querySelector('.lucide-check');
@@ -105,10 +131,11 @@ class TaskItemView extends View {
     });
   }
 
-  addMenuHandler(handler) {
+  addOpenMenuHandler(handler) {
     this._parentEl.addEventListener('click', e => {
       const btn = e.target.closest('.todo__menu-btn');
       if (!btn) return;
+      this._taskEl = btn.closest('.todo__list--item');
       const rect = btn.getBoundingClientRect();
       const elPos = {
         width: rect.width,
@@ -116,8 +143,23 @@ class TaskItemView extends View {
         x: rect.x,
         y: rect.y,
       };
+      handler(elPos, this._taskEl.dataset.id);
+    });
+  }
 
-      handler(elPos, this._getId(btn));
+  addSubmitEditHandler(handler) {
+    this._parentEl.addEventListener('submit', e => {
+      e.preventDefault();
+
+      handler(this._taskEl.dataset.id);
+    });
+  }
+
+  addCancelEditHandler(handler) {
+    this._parentEl.addEventListener('focusout', e => {
+      const inputEl = e.target.closest('.description-edit');
+      if (!inputEl) return;
+      handler(this._taskEl.dataset.id);
     });
   }
 }

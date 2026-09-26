@@ -66,8 +66,13 @@ export const deleteTask = function (id) {
 };
 
 export const setImportantTask = function (id, importantBool) {
-  const taskId = state.todo.findIndex(task => task.id === id);
-  state.todo[taskId].isImportant = importantBool;
-  
+  const task = state.todo.find(task => task.id === id);
+  task.isImportant = importantBool;
+  persistTodo();
+};
+
+export const editTask = function (id, newDescription) {
+  const task = state.todo.find(task => task.id === id);
+  task.description = newDescription;
   persistTodo();
 };

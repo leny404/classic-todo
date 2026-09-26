@@ -90,6 +90,29 @@ const markAsImportantContorller = function (id, isActive) {
   );
 };
 
+const editOpenController = function () {
+  taskItemView.showEditAction();
+};
+
+const editCancelController = function () {
+  taskItemView.hideEditAction();
+};
+
+const editSubmitController = function (id) {
+  taskItemView.hideEditAction();
+
+  const newValue = taskItemView.getInputValue();
+  const oldValue = model.findTodoById(id).description;
+
+  if (newValue === oldValue) return;
+
+  model.editTask(id, newValue);
+
+  taskItemView.renderAll(
+    isFilterActive ? model.filterTasks() : model.state.todo,
+  );
+};
+
 const init = function () {
   if (model.state.todo.length === 0) taskItemView.renderMessage();
   else taskItemView.renderAll(model.state.todo);
@@ -108,9 +131,14 @@ const init = function () {
   modalConfirmView.addConfirmHandler(removeTask);
   modalConfirmView.addCancelHandler();
 
-  taskItemView.addMenuHandler(menuController);
+  taskItemView.addOpenMenuHandler(menuController);
   modalMenuView.addCancelHandler();
-  modalMenuView.addMarkAsImportant(markAsImportantContorller);
+
+  modalMenuView.addMarkAsImportantHandler(markAsImportantContorller);
+  modalMenuView.addEditHandler(editOpenController);
+  taskItemView.addCancelEditHandler(editCancelController);
+
+  taskItemView.addSubmitEditHandler(editSubmitController);
 };
 init();
 
