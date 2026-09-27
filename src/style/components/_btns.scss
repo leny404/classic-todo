@@ -98,11 +98,14 @@
   right: 19px;
   // margin-left: auto;
   color: var(--primary-color-shade-1);
-
   flex-shrink: 0;
 
   .todo__list--item:hover & {
     color: var(--delete-btn-color-shade-2);
+  }
+
+  .todo__list--important & {
+    color: var(--important-shade-2) !important;
   }
 
   opacity: 0;
