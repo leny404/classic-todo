@@ -58,7 +58,7 @@ export const filterTasks = function () {
 };
 
 export const deleteTask = function (id) {
-  const taskId = state.todo.findIndex(task => task.id === id);
+  const taskId = findTodoById(id);
   if (taskId === -1) return;
 
   state.todo.splice(taskId, 1);
@@ -66,13 +66,13 @@ export const deleteTask = function (id) {
 };
 
 export const setImportantTask = function (id, importantBool) {
-  const task = state.todo.find(task => task.id === id);
+  const task = findTodoById(id);
   task.isImportant = importantBool;
   persistTodo();
 };
 
 export const editTask = function (id, newDescription) {
-  const task = state.todo.find(task => task.id === id);
+  const task = findTodoById(id);
   task.description = newDescription;
   persistTodo();
 };

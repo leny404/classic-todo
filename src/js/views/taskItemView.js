@@ -79,6 +79,16 @@ class TaskItemView extends View {
     return document.querySelector(`[data-id="${id}"]`);
   }
 
+  _calculateElementPosition(el) {
+    const rect = el.getBoundingClientRect();
+    return {
+      width: rect.width,
+      height: rect.height,
+      x: rect.x,
+      y: rect.y,
+    };
+  }
+
   showEditAction() {
     const taskEl = this._getTaskElById(this._currentId);
     if (!taskEl) return;
@@ -147,14 +157,7 @@ class TaskItemView extends View {
       if (!btn) return;
 
       this._currentId = this._getId(btn);
-      console.log(this._currentId);
-      const rect = btn.getBoundingClientRect();
-      const elPos = {
-        width: rect.width,
-        height: rect.height,
-        x: rect.x,
-        y: rect.y,
-      };
+      const elPos = this._calculateElementPosition(btn);
       handler(elPos, this._currentId);
     });
   }

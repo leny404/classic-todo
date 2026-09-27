@@ -78,7 +78,6 @@ const menuController = function (elPos, id) {
   if (!task) return;
 
   modalMenuView.open(id);
-  console.log(elPos);
   modalMenuView.teleportToPos(elPos);
 
   modalMenuView.setHighlightBtnActive(task.isImportant);
