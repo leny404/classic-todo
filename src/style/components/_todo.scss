@@ -239,3 +239,20 @@
     background-color: var(--important-shade-1);
   }
 }
+
+.task__grab-icon {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: transparent;
+  cursor: pointer;
+  transition: color 0.23s;
+
+  .todo__list--item:hover & {
+    color: var(--primary-color-shade-1);
+  }
+  .todo__list--item.todo__list--important:hover & {
+    color: var(--important-shade-1);
+  }
+}

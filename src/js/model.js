@@ -60,7 +60,6 @@ export const filterTasks = function () {
 export const deleteTask = function (id) {
   const taskId = state.todo.findIndex(task => task.id === id);
   if (taskId === -1) return;
-
   state.todo.splice(taskId, 1);
   persistTodo();
 };

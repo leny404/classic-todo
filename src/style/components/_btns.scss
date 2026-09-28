@@ -13,6 +13,7 @@
   cursor: pointer;
   transition: background-color 0.23s;
   line-height: 1.25;
+  flex-shrink: 0;
 }
 
 .primary--btn {
@@ -53,6 +54,7 @@
   cursor: pointer;
   border-radius: 7px;
   padding: 0.6rem;
+  flex-shrink: 0;
 }
 .delete-btn {
   &:hover,

@@ -9,7 +9,7 @@
   max-width: 32rem;
 
   &__overlay {
-    position: absolute;
+    position: fixed;
     z-index: 100;
 
     top: 0;

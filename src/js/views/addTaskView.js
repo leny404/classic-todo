@@ -9,10 +9,15 @@ class AddTaskView extends View {
     return this._inputField.value.trim();
   }
 
+  _setInputFocus() {
+    this._inputField.focus();
+  }
+
   addTaskHandler(handler) {
     this._addBtn.addEventListener('click', () => {
       handler();
       this._inputField.value = '';
+      this._setInputFocus();
     });
   }
 }
