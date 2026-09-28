@@ -78,7 +78,8 @@
   &--item {
     width: 100%;
     // overflow-x: scroll;
-    overflow-y: hidden;
+    // overflow-y: hidden;
+    position: relative;
 
     display: flex;
     gap: 1.6rem;
@@ -97,6 +98,16 @@
     }
     &:not(:last-of-type) {
       margin-bottom: 1rem;
+    }
+
+    &.todo__list--important ::after {
+      content: '⭐';
+      position: absolute;
+      font-size: 2.6rem;
+      top: 50%;
+      transform: translate(0%, -50%);
+      left: -45px;
+      z-index: 100;
     }
 
     &.todo__list--important {
