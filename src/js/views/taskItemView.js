@@ -66,9 +66,9 @@ class TaskItemView extends View {
     `;
   }
 
-  _toggleAllBtns(btn) {
-    const btns = [...document.querySelectorAll(`.${btn}`)];
-    btns.forEach(b => b.classList.toggle(`${btn}--active`));
+  _toggleAllBtns(btnClassName) {
+    const btns = [...document.querySelectorAll(`.${btnClassName}`)];
+    btns.forEach(b => b.classList.toggle(`${btnClassName}--active`));
   }
 
   _getId(btn) {
@@ -157,8 +157,8 @@ class TaskItemView extends View {
       if (!btn) return;
 
       this._currentId = this._getId(btn);
-      const elPos = this._calculateElementPosition(btn);
-      handler(elPos, this._currentId);
+      const btnRect = this._calculateElementPosition(btn);
+      handler(btnRect, this._currentId);
     });
   }
 

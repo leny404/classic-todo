@@ -73,18 +73,18 @@ const controlDeleteTask = function (id) {
   removeTask(id);
 };
 
-const menuController = function (elPos, id) {
+const menuController = function (btnRect, id) {
   const task = model.findTodoById(id);
   if (!task) return;
 
   modalMenuView.open(id);
-  modalMenuView.teleportToPos(elPos);
+  modalMenuView.teleportToPos(btnRect);
 
   modalMenuView.setHighlightBtnActive(task.isImportant);
 };
 
-const markAsImportantContorller = function (id, isActive) {
-  model.setImportantTask(id, !isActive);
+const markAsImportantController = function (id, wasImportant) {
+  model.setImportantTask(id, !wasImportant);
   taskItemView.renderAll(
     isFilterActive ? model.filterTasks() : model.state.todo,
   );
@@ -134,7 +134,7 @@ const init = function () {
   taskItemView.addOpenMenuHandler(menuController);
   modalMenuView.addCancelHandler();
 
-  modalMenuView.addMarkAsImportantHandler(markAsImportantContorller);
+  modalMenuView.addMarkAsImportantHandler(markAsImportantController);
   modalMenuView.addEditHandler(editOpenController);
   taskItemView.addCancelEditHandler(editCancelController);
 
