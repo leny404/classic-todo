@@ -59,6 +59,10 @@
   }
 }
 
+.lucide-highlighter {
+  flex-shrink: 0;
+}
+
 .modal-menu__highlight-btn--active {
   .lucide-highlighter {
     stroke-width: 2.5;

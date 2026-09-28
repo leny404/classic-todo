@@ -29,3 +29,9 @@ main {
 .no-transition * {
   transition: none !important;
 }
+
+@media (max-width: 950px) {
+  html {
+    font-size: 55%;
+  }
+}

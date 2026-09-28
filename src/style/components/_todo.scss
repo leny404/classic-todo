@@ -176,6 +176,7 @@
 
   .todo__input-add {
     font-family: 'Poppins', sans-serif;
+    width: clamp(20rem, 100%, 38rem);
     font-size: 1.8rem;
     font-weight: 500;
     padding: 1rem 2rem;

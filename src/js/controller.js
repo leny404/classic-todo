@@ -55,15 +55,20 @@ const themeController = function (isDark) {
 const removeTask = function (id) {
   model.deleteTask(id);
 
+  console.log(id);
+
   updateButtonsState();
   taskItemView.renderAll(
     isFilterActive ? model.filterTasks() : model.state.todo,
   );
+
   if (model.state.todo.length === 0) taskItemView.renderMessage();
 };
 
 const controlDeleteTask = function (id) {
   const task = model.findTodoById(id);
+
+  console.log(id);
 
   if (task && !task.isFinished) {
     modalConfirmView.open(id);
@@ -76,6 +81,7 @@ const controlDeleteTask = function (id) {
 const menuController = function (btnRect, id) {
   const task = model.findTodoById(id);
   if (!task) return;
+  console.log(id);
 
   modalMenuView.open(id);
   modalMenuView.teleportToPos(btnRect);
