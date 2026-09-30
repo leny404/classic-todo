@@ -119,6 +119,10 @@ const editSubmitController = function (id) {
   );
 };
 
+const movingTaskController = function (x, y) {
+  taskItemView.moveTask(x - 10, y - 10);
+};
+
 const init = function () {
   if (model.state.todo.length === 0) taskItemView.renderMessage();
   else taskItemView.renderAll(model.state.todo);
@@ -145,6 +149,9 @@ const init = function () {
   taskItemView.addCancelEditHandler(editCancelController);
 
   taskItemView.addSubmitEditHandler(editSubmitController);
+
+  taskItemView.addGrabReleaseTaskHandler();
+  taskItemView.addMovingTaskHandler(movingTaskController);
 };
 init();
 

@@ -5,6 +5,7 @@ class TaskItemView extends View {
   _message = 'Add your first task!';
   _deleteMode = false;
   _currentId = null;
+  _grabbingTask = null;
 
   _generateMarkup() {
     return `
@@ -108,6 +109,22 @@ class TaskItemView extends View {
     };
   }
 
+  _setGrabbingTask(isGrabbing, taskEl = '') {
+    if (isGrabbing) {
+      this._grabbingTask = taskEl;
+      this._grabbingTask.classList.add('grabbed');
+    } else {
+      this._grabbingTask.classList.remove('grabbed');
+      this._grabbingTask = null;
+    }
+  }
+
+  _resetGrabbingTask() {
+    this.moveTask(0, 0);
+    this._setGrabbingTask(false);
+    this._startingPos = null;
+  }
+
   showEditAction() {
     const taskEl = this._getTaskElById(this._currentId);
     if (!taskEl) return;
@@ -149,6 +166,10 @@ class TaskItemView extends View {
 
   toggleMenuBtns() {
     this._toggleAllBtns('todo__menu-btn');
+  }
+
+  moveTask(x, y) {
+    this._grabbingTask.style.transform = `translate(${x}px, ${y}px)`;
   }
 
   addCheckmarkTaskHandler(handler) {
@@ -194,6 +215,34 @@ class TaskItemView extends View {
       const inputEl = e.target.closest('.description-edit');
       if (!inputEl) return;
       handler(this._currentId);
+    });
+  }
+
+  addGrabReleaseTaskHandler() {
+    this._parentEl.addEventListener('mousedown', e => {
+      const clicked = e.target.closest('.task__grab-icon');
+      if (!clicked) return;
+
+      const taskEl = clicked.closest('.todo__list--item');
+      this._setGrabbingTask(true, taskEl);
+
+      const startingPos = clicked.getBoundingClientRect();
+      this._startingPos = { x: startingPos.x, y: startingPos.y };
+      console.log(this._startingPos);
+    });
+
+    this._parentEl.addEventListener('mouseup', e => {
+      if (!this._grabbingTask) return;
+      this._resetGrabbingTask();
+    });
+  }
+
+  addMovingTaskHandler(handler) {
+    window.addEventListener('mousemove', e => {
+      if (!this._grabbingTask) return;
+      const moveX = -(this._startingPos.x - e.x);
+      const moveY = -(this._startingPos.y - e.y);
+      handler(moveX, moveY);
     });
   }
 }

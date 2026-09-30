@@ -144,6 +144,14 @@
         background-color: var(--important-shade-2) !important;
       }
     }
+
+    &.grabbed {
+      z-index: 100;
+    }
+    &.grabbed * {
+      user-select: none;
+      cursor: grabbing;
+    }
   }
 
   .todo__description {
