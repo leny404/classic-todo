@@ -3,7 +3,6 @@ import taskItemView from './views/taskItemView';
 import { deleteBtnView, filterBtnView, themeBtnView } from './views/btnView';
 import modalConfirmView from './views/modalConfirmView';
 import modalMenuView from './views/modalMenuView';
-import { CATCH_X_OFFSET, CATCH_Y_OFFSET } from './config.js';
 
 import * as model from './model';
 
@@ -117,8 +116,8 @@ const editSubmitController = function (id) {
 
 const grabTaskController = function (grabbedEl) {
   taskItemView.setGrab(true, grabbedEl);
-  taskItemView.moveTask(CATCH_X_OFFSET, CATCH_Y_OFFSET);
   taskItemView.createAttachments();
+  taskItemView.placeInitialPlaceholder();
 };
 
 // !fix the fucking placeholder because its scuffed
@@ -135,11 +134,11 @@ const releaseTaskController = function (taskId, grabbedId, position) {
 };
 
 const movingTaskController = function (x, y) {
-  taskItemView.moveTask(x + CATCH_X_OFFSET, y + CATCH_Y_OFFSET);
+  taskItemView.moveTask(x, y);
 };
 
 const attachmentController = function (taskEl, attachmentEl) {
-  taskItemView.placeAttachmentPlaceholder(taskEl, attachmentEl.dataset.attachment); //prettier-ignore
+  // taskItemView.placeAttachmentPlaceholder(taskEl, attachmentEl.dataset.attachment); //prettier-ignore
 };
 
 const init = function () {

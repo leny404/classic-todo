@@ -88,10 +88,88 @@ class TaskItemView extends View {
     `;
   }
 
+  // _generateAttachmentPlaceholderMarkup() {
+  //   return `
+  //     <li class="todo__list--item todo__list--item--placeholder">
+  //         <p class="todo__description todo__description--placeholder">${this._grabbingTask.querySelector('.todo__description').textContent}</p>
+  //     </li>
+  //   `;
+  // }
   _generateAttachmentPlaceholderMarkup() {
     return `
       <li class="todo__list--item todo__list--item--placeholder">
-          <p class="todo__description todo__description--placeholder">asdasdasd</p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="26"
+          height="26"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-check preview-icon ${this._data?.isFinished ? 'checked' : ''}"
+        >
+          <path d="M20 6 9 17l-5-5" />
+        </svg>
+        <p class="todo__description todo__description--shown">${this._grabbingTask.querySelector('.todo__description').textContent}</p>
+        <form class="form-edit">
+        <input type="text"  name="description-edit" id="description-edit" class="description-edit description-edit--shown" />
+        </form>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="38"
+          height="38"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-ellipsis-vertical preview-icon todo__menu-btn ${this._deleteMode ? '' : 'todo__menu-btn--active'}"
+        >
+          <circle cx="12" cy="12" r="1" />
+          <circle cx="12" cy="5" r="1" />
+          <circle cx="12" cy="19" r="1" />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="38"
+          height="38"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.1"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-trash preview-icon todo__delete-btn ${this._deleteMode ? 'todo__delete-btn--active' : ''}"
+        >
+          <path d="M10 11v6" />
+          <path d="M14 11v6" />
+          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+          <path d="M3 6h18" />
+          <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+        </svg>
+        <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-grip-horizontal preview-icon task__grab-icon"
+      >
+        <circle cx="12" cy="9" r="1" />
+        <circle cx="19" cy="9" r="1" />
+        <circle cx="5" cy="9" r="1" />
+        <circle cx="12" cy="15" r="1" />
+        <circle cx="19" cy="15" r="1" />
+        <circle cx="5" cy="15" r="1" />
+      </svg>
+        <div class="btn-placeholder"></div>
       </li>
     `;
   }
@@ -175,12 +253,25 @@ class TaskItemView extends View {
   }
 
   // taskEl default is '' because if isGrabbing is false, then it doesn't need a taskEl
+  // taskItemView.js
   setGrab(isGrabbing, taskEl = '') {
     if (isGrabbing) {
       this._grabbingTask = taskEl;
+
+      const rect = taskEl.getBoundingClientRect();
+      const parentRect = taskEl.offsetParent.getBoundingClientRect();
+
+      // pozycja WZGLĘDEM offsetParent (rodzica z position: relative), w px, raz na zawsze
+      this._grabbingTask.style.top = `${rect.top - parentRect.top + 141}px`;
+      this._grabbingTask.style.left = `${rect.left - parentRect.left + 48}px`;
+      this._grabbingTask.style.width = `${rect.width}px`;
+
       this._grabbingTask.classList.add('grabbed');
     }
     if (!isGrabbing) {
+      this._grabbingTask.style.top = '';
+      this._grabbingTask.style.left = '';
+      this._grabbingTask.style.width = '';
       this._grabbingTask.classList.remove('grabbed');
       this._grabbingTask = null;
     }
@@ -216,6 +307,26 @@ class TaskItemView extends View {
     });
   }
 
+  placeInitialPlaceholder() {
+    if (!this._grabbingTask) return;
+
+    // attachmenty sąsiadujące z chwyconym elementem (po createAttachments)
+    const prev = this._grabbingTask.previousElementSibling;
+    const next = this._grabbingTask.nextElementSibling;
+    const prevAtt = prev?.matches('.task-item__attachment') ? prev : null;
+    const nextAtt = next?.matches('.task-item__attachment') ? next : null;
+    console.log(prevAtt, nextAtt);
+
+    this._clearPlaceholders();
+    this._grabbingTask.insertAdjacentHTML(
+      'afterend',
+      this._generateAttachmentPlaceholderMarkup(),
+    );
+
+    // puszczenie bez ruchu = wstawienie w to samo miejsce
+    this._attachedEl = prevAtt ?? nextAtt ?? null;
+  }
+
   removeAttachments() {
     const allAttachmentsEl = this._parentEl.querySelectorAll(
       '.task-item__attachment',
@@ -233,6 +344,10 @@ class TaskItemView extends View {
   placeAttachmentPlaceholder(el, position) {
     const placeholderMarkup = this._generateAttachmentPlaceholderMarkup();
     const where = position === 'before' ? 'beforebegin' : 'afterend';
+
+    const existingPlaceholder = document.querySelector('.todo__list--item--placeholder'); //prettier-ignore
+    const targetSibling = position === 'before' ? el.previousElementSibling : el.nextElementSibling; //prettier-ignore
+    if (existingPlaceholder && existingPlaceholder === targetSibling) return; // już na miejscu, nic nie rób
 
     this._clearPlaceholders();
     el.insertAdjacentHTML(where, placeholderMarkup);
@@ -290,8 +405,7 @@ class TaskItemView extends View {
       if (!grabIcon) return;
 
       const grabbedEl = grabIcon.closest('.todo__list--item');
-      const { x, y } = this._calculateElementPosition(grabIcon);
-      this._startingPos = { x, y };
+      this._startingPos = { x: e.x, y: e.y };
 
       handler(grabbedEl);
     });
@@ -300,7 +414,14 @@ class TaskItemView extends View {
   addReleaseTaskHandler(handler) {
     window.addEventListener('mouseup', () => {
       if (!this._grabbingTask) return;
-      if (!this._attachedEl) return;
+
+      // If there is one task this prevent it from sticking to cursor
+      if (!this._attachedEl) {
+        this.removeAttachments();
+        this.resetGrabbing();
+        this._clearPlaceholders();
+        return;
+      }
 
       handler(
         this._attachedEl.dataset.taskId,
@@ -317,8 +438,9 @@ class TaskItemView extends View {
   addMovingTaskHandler(handler) {
     window.addEventListener('mousemove', e => {
       if (!this._grabbingTask) return;
-      const moveX = -(this._startingPos.x - e.x);
-      const moveY = -(this._startingPos.y - e.y);
+      const moveX = e.x - this._startingPos.x;
+      const moveY = e.y - this._startingPos.y;
+
       handler(moveX, moveY);
     });
   }
@@ -330,10 +452,9 @@ class TaskItemView extends View {
 
       const taskEl = this._getTaskElById(attachmentEl.dataset.taskId);
       this._attachedEl = attachmentEl;
-      console.log(
-        this._attachedEl.dataset.taskId,
-        this._attachedEl.dataset.attachment,
-      );
+
+      this.placeAttachmentPlaceholder(taskEl, attachmentEl.dataset.attachment); //prettier-ignore
+
       handler(taskEl, attachmentEl);
     });
   }
