@@ -29,3 +29,25 @@ main {
 .no-transition * {
   transition: none !important;
 }
+
+@media (max-width: 600px) {
+  html {
+    font-size: 48%;
+  }
+  .toolbar-icon,
+  .todo__menu-btn,
+  .theme-btn,
+  .todo__delete-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .lucide-check {
+    width: 22px;
+    height: 22px;
+  }
+
+  .todo__list--important ::after {
+    left: -33px !important;
+  }
+}

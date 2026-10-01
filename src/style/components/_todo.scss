@@ -145,6 +145,9 @@
       }
     }
 
+    .grabbed {
+      pointer-events: none;
+    }
     &.grabbed {
       z-index: 100;
       pointer-events: none;
@@ -209,6 +212,12 @@
     z-index: 200;
     // pointer-events: none;
   }
+}
+
+body.is-grabbing,
+body.is-grabbing * {
+  cursor: grabbing !important;
+  user-select: none;
 }
 
 .todo__toolbar {

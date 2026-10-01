@@ -120,10 +120,6 @@ const grabTaskController = function (grabbedEl) {
   taskItemView.placeInitialPlaceholder();
 };
 
-// !fix the fucking placeholder because its scuffed
-// !create notes which i can move and pin like a bitch
-// !fix the fucking grabbing task
-
 const releaseTaskController = function (taskId, grabbedId, position) {
   taskItemView.removeAttachments();
   model.changeTaskPosition(grabbedId, taskId, position);

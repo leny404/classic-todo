@@ -255,6 +255,9 @@ class TaskItemView extends View {
   // taskEl default is '' because if isGrabbing is false, then it doesn't need a taskEl
   // taskItemView.js
   setGrab(isGrabbing, taskEl = '') {
+    // For cursor grabbed to work
+    document.body.classList.toggle('is-grabbing', isGrabbing);
+
     if (isGrabbing) {
       this._grabbingTask = taskEl;
 
@@ -400,9 +403,10 @@ class TaskItemView extends View {
   }
 
   addGrabTaskHandler(handler) {
-    this._parentEl.addEventListener('mousedown', e => {
+    this._parentEl.addEventListener('pointerdown', e => {
       const grabIcon = e.target.closest('.task__grab-icon');
       if (!grabIcon) return;
+      e.preventDefault();
 
       const grabbedEl = grabIcon.closest('.todo__list--item');
       this._startingPos = { x: e.x, y: e.y };
@@ -412,7 +416,7 @@ class TaskItemView extends View {
   }
 
   addReleaseTaskHandler(handler) {
-    window.addEventListener('mouseup', () => {
+    const release = () => {
       if (!this._grabbingTask) return;
 
       // If there is one task this prevent it from sticking to cursor
@@ -432,11 +436,14 @@ class TaskItemView extends View {
       this.resetGrabbing();
       this._clearPlaceholders();
       this._attachedEl = null;
-    });
+    };
+
+    window.addEventListener('pointerup', release);
+    window.addEventListener('pointercancel', release);
   }
 
   addMovingTaskHandler(handler) {
-    window.addEventListener('mousemove', e => {
+    window.addEventListener('pointermove', e => {
       if (!this._grabbingTask) return;
       const moveX = e.x - this._startingPos.x;
       const moveY = e.y - this._startingPos.y;
