@@ -75,3 +75,20 @@ export const editTask = function (id, newDescription) {
   task.description = newDescription;
   persistTodo();
 };
+console.log(state.todo);
+
+export const changeTaskPosition = function (grabbedId, targetId, position) {
+  const currentIndex = state.todo.findIndex(task => task.id === grabbedId);
+  if (currentIndex === -1) return;
+
+  const [task] = state.todo.splice(currentIndex, 1);
+
+  let targetIndex = state.todo.findIndex(t => t.id === targetId);
+  if (targetIndex === -1) {
+    state.todo.push(task);
+  } else {
+    if (position === 'after') targetIndex += 1;
+    state.todo.splice(targetIndex, 0, task);
+  }
+  persistTodo();
+};

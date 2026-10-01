@@ -3,6 +3,7 @@ import taskItemView from './views/taskItemView';
 import { deleteBtnView, filterBtnView, themeBtnView } from './views/btnView';
 import modalConfirmView from './views/modalConfirmView';
 import modalMenuView from './views/modalMenuView';
+import { CATCH_X_OFFSET, CATCH_Y_OFFSET } from './config.js';
 
 import * as model from './model';
 
@@ -55,8 +56,6 @@ const themeController = function (isDark) {
 const removeTask = function (id) {
   model.deleteTask(id);
 
-  console.log(id);
-
   updateButtonsState();
   taskItemView.renderAll(
     isFilterActive ? model.filterTasks() : model.state.todo,
@@ -67,8 +66,6 @@ const removeTask = function (id) {
 
 const controlDeleteTask = function (id) {
   const task = model.findTodoById(id);
-
-  console.log(id);
 
   if (task && !task.isFinished) {
     modalConfirmView.open(id);
@@ -81,7 +78,6 @@ const controlDeleteTask = function (id) {
 const menuController = function (btnRect, id) {
   const task = model.findTodoById(id);
   if (!task) return;
-  console.log(id);
 
   modalMenuView.open(id);
   modalMenuView.teleportToPos(btnRect);
@@ -119,13 +115,43 @@ const editSubmitController = function (id) {
   );
 };
 
+const grabTaskController = function (grabbedEl) {
+  taskItemView.setGrab(true, grabbedEl);
+  taskItemView.moveTask(CATCH_X_OFFSET, CATCH_Y_OFFSET);
+  taskItemView.createAttachments();
+};
+
+// !fix the fucking placeholder because its scuffed
+// !create notes which i can move and pin like a bitch
+// !fix the fucking grabbing task
+
+const releaseTaskController = function (taskId, grabbedId, position) {
+  taskItemView.removeAttachments();
+  model.changeTaskPosition(grabbedId, taskId, position);
+
+  taskItemView.renderAll(
+    isFilterActive ? model.filterTasks() : model.state.todo,
+  );
+};
+
 const movingTaskController = function (x, y) {
-  taskItemView.moveTask(x - 10, y - 10);
+  taskItemView.moveTask(x + CATCH_X_OFFSET, y + CATCH_Y_OFFSET);
+};
+
+const attachmentController = function (taskEl, attachmentEl) {
+  taskItemView.placeAttachmentPlaceholder(taskEl, attachmentEl.dataset.attachment); //prettier-ignore
 };
 
 const init = function () {
   if (model.state.todo.length === 0) taskItemView.renderMessage();
   else taskItemView.renderAll(model.state.todo);
+
+  // document
+  //     .querySelector('.todo__list')
+  //     .insertAdjacentHTML(
+  //       'afterbegin',
+  //       taskItemView._generatePlaceholderMarkup(),
+  //     );
 
   updateButtonsState();
   deleteBtnView.addClickHandler(controlDeleteModeToggle);
@@ -150,8 +176,10 @@ const init = function () {
 
   taskItemView.addSubmitEditHandler(editSubmitController);
 
-  taskItemView.addGrabReleaseTaskHandler();
+  taskItemView.addGrabTaskHandler(grabTaskController);
+  taskItemView.addReleaseTaskHandler(releaseTaskController);
   taskItemView.addMovingTaskHandler(movingTaskController);
+  taskItemView.addAttachmentHandler(attachmentController);
 };
 init();
 

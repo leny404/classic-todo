@@ -147,10 +147,23 @@
 
     &.grabbed {
       z-index: 100;
+      pointer-events: none;
+      position: absolute;
     }
+
     &.grabbed * {
       user-select: none;
-      cursor: grabbing;
+      cursor: grabbing !important;
+    }
+
+    &--placeholder {
+      background-color: #cacaca1d;
+      border-color: #555;
+
+      &:hover {
+        background-color: #cacaca1d;
+        border-color: #555;
+      }
     }
   }
 
@@ -168,11 +181,26 @@
       visibility: visible;
       pointer-events: all;
     }
+
+    &--placeholder {
+      display: inline;
+      opacity: 0;
+    }
   }
 
   .lucide-check.checked + .todo__description {
     text-decoration: line-through;
     color: var(--text-color-3);
+  }
+
+  & .task-item__attachment {
+    width: 100%;
+    height: 55px;
+    background-color: rgba(77, 255, 0, 0.219);
+    position: absolute;
+    transform: translateY(-32px);
+    z-index: 200;
+    // pointer-events: none;
   }
 }
 
@@ -254,7 +282,7 @@
   left: 50%;
   transform: translate(-50%, 0);
   color: transparent;
-  cursor: pointer;
+  cursor: grab;
   transition: color 0.23s;
 
   .todo__list--item:hover & {

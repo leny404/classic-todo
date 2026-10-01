@@ -6,6 +6,8 @@ class TaskItemView extends View {
   _deleteMode = false;
   _currentId = null;
   _grabbingTask = null;
+  _startingPos = null;
+  _attachedEl = null;
 
   _generateMarkup() {
     return `
@@ -86,6 +88,14 @@ class TaskItemView extends View {
     `;
   }
 
+  _generateAttachmentPlaceholderMarkup() {
+    return `
+      <li class="todo__list--item todo__list--item--placeholder">
+          <p class="todo__description todo__description--placeholder">asdasdasd</p>
+      </li>
+    `;
+  }
+
   _toggleAllBtns(btnClassName) {
     const btns = [...document.querySelectorAll(`.${btnClassName}`)];
     btns.forEach(b => b.classList.toggle(`${btnClassName}--active`));
@@ -109,20 +119,12 @@ class TaskItemView extends View {
     };
   }
 
-  _setGrabbingTask(isGrabbing, taskEl = '') {
-    if (isGrabbing) {
-      this._grabbingTask = taskEl;
-      this._grabbingTask.classList.add('grabbed');
-    } else {
-      this._grabbingTask.classList.remove('grabbed');
-      this._grabbingTask = null;
-    }
-  }
-
-  _resetGrabbingTask() {
-    this.moveTask(0, 0);
-    this._setGrabbingTask(false);
-    this._startingPos = null;
+  _createAttachmentEl(side, id) {
+    const attachmentEl = document.createElement('div');
+    attachmentEl.classList.add(`task-item__attachment`);
+    attachmentEl.setAttribute('data-attachment', side);
+    attachmentEl.setAttribute('data-task-id', id);
+    return attachmentEl;
   }
 
   showEditAction() {
@@ -172,6 +174,70 @@ class TaskItemView extends View {
     this._grabbingTask.style.transform = `translate(${x}px, ${y}px)`;
   }
 
+  // taskEl default is '' because if isGrabbing is false, then it doesn't need a taskEl
+  setGrab(isGrabbing, taskEl = '') {
+    if (isGrabbing) {
+      this._grabbingTask = taskEl;
+      this._grabbingTask.classList.add('grabbed');
+    }
+    if (!isGrabbing) {
+      this._grabbingTask.classList.remove('grabbed');
+      this._grabbingTask = null;
+    }
+  }
+
+  resetGrabbing() {
+    this.moveTask(0, 0);
+    this.setGrab(false);
+    this._startingPos = null;
+  }
+
+  createAttachments() {
+    const allTaskElements = [
+      ...this._parentEl.querySelectorAll('.todo__list--item'),
+    ];
+
+    allTaskElements.forEach((taskEl, index, arr) => {
+      const taskElId = taskEl.dataset.id;
+      const grabbedElId = this._grabbingTask.dataset.id;
+      const lastIndex = arr.length - 1;
+
+      const createdEl = positionAfter =>
+        this._createAttachmentEl(positionAfter ? 'after' : 'before', taskElId);
+
+      if (taskEl.classList.contains('todo__description--placeholder')) return;
+
+      if (taskElId === grabbedElId) return;
+      if (index === 0 && taskElId === grabbedElId) return;
+      if (index === lastIndex && taskElId === grabbedElId) return;
+
+      taskEl.before(createdEl(false));
+      taskEl.after(createdEl(true));
+    });
+  }
+
+  removeAttachments() {
+    const allAttachmentsEl = this._parentEl.querySelectorAll(
+      '.task-item__attachment',
+    );
+    allAttachmentsEl.forEach(attEl => attEl.remove());
+  }
+
+  _clearPlaceholders() {
+    const allPlaceHolders = document.querySelectorAll(
+      '.todo__list--item--placeholder',
+    );
+    allPlaceHolders.forEach(el => el.remove());
+  }
+
+  placeAttachmentPlaceholder(el, position) {
+    const placeholderMarkup = this._generateAttachmentPlaceholderMarkup();
+    const where = position === 'before' ? 'beforebegin' : 'afterend';
+
+    this._clearPlaceholders();
+    el.insertAdjacentHTML(where, placeholderMarkup);
+  }
+
   addCheckmarkTaskHandler(handler) {
     this._parentEl.addEventListener('click', e => {
       const checkmark = e.target.closest('.lucide-check');
@@ -218,22 +284,33 @@ class TaskItemView extends View {
     });
   }
 
-  addGrabReleaseTaskHandler() {
+  addGrabTaskHandler(handler) {
     this._parentEl.addEventListener('mousedown', e => {
-      const clicked = e.target.closest('.task__grab-icon');
-      if (!clicked) return;
+      const grabIcon = e.target.closest('.task__grab-icon');
+      if (!grabIcon) return;
 
-      const taskEl = clicked.closest('.todo__list--item');
-      this._setGrabbingTask(true, taskEl);
+      const grabbedEl = grabIcon.closest('.todo__list--item');
+      const { x, y } = this._calculateElementPosition(grabIcon);
+      this._startingPos = { x, y };
 
-      const startingPos = clicked.getBoundingClientRect();
-      this._startingPos = { x: startingPos.x, y: startingPos.y };
-      console.log(this._startingPos);
+      handler(grabbedEl);
     });
+  }
 
-    this._parentEl.addEventListener('mouseup', e => {
+  addReleaseTaskHandler(handler) {
+    window.addEventListener('mouseup', () => {
       if (!this._grabbingTask) return;
-      this._resetGrabbingTask();
+      if (!this._attachedEl) return;
+
+      handler(
+        this._attachedEl.dataset.taskId,
+        this._grabbingTask.dataset.id,
+        this._attachedEl.dataset.attachment,
+      );
+
+      this.resetGrabbing();
+      this._clearPlaceholders();
+      this._attachedEl = null;
     });
   }
 
@@ -243,6 +320,21 @@ class TaskItemView extends View {
       const moveX = -(this._startingPos.x - e.x);
       const moveY = -(this._startingPos.y - e.y);
       handler(moveX, moveY);
+    });
+  }
+
+  addAttachmentHandler(handler) {
+    this._parentEl.addEventListener('mouseover', e => {
+      const attachmentEl = e.target.closest('.task-item__attachment');
+      if (!attachmentEl) return;
+
+      const taskEl = this._getTaskElById(attachmentEl.dataset.taskId);
+      this._attachedEl = attachmentEl;
+      console.log(
+        this._attachedEl.dataset.taskId,
+        this._attachedEl.dataset.attachment,
+      );
+      handler(taskEl, attachmentEl);
     });
   }
 }
